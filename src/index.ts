@@ -18,8 +18,8 @@ const PORT = process.env.PORT || 5175;
 // ─── Security & Utility Middleware ───────────────────────────────────────────
 app.use(helmet());
 
-// ALLOWED_ORIGINS env var accepts a comma-separated list of production URLs
-// e.g. ALLOWED_ORIGINS=https://fz-frontend.vercel.app,https://fashionzone.com
+// ALLOWED_ORIGINS env var accepts a comma-separated list of extra production URLs
+// e.g. ALLOWED_ORIGINS=https://mycustomdomain.com,https://staging.example.com
 const extraOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(",").map((o) => o.trim())
   : [];
@@ -27,6 +27,10 @@ const extraOrigins = process.env.ALLOWED_ORIGINS
 const ALLOWED_ORIGINS = [
   process.env.CLIENT_URL,
   ...extraOrigins,
+  // Production deployments
+  "https://fz-khatri.vercel.app",
+  "https://fz-frontend.vercel.app",
+  // Local development
   "http://localhost:3000",
   "http://localhost:3001",
   "http://localhost:5173",
@@ -34,12 +38,17 @@ const ALLOWED_ORIGINS = [
   "http://localhost:5175",
 ].filter(Boolean) as string[];
 
+// Pattern for Vercel preview deployment URLs (fz-frontend-git-*.vercel.app)
+const VERCEL_PREVIEW_RE = /^https:\/\/fz-(?:frontend|khatri)[a-z0-9-]*\.vercel\.app$/;
+
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow requests with no origin (curl, Postman, mobile apps)
+      // Allow requests with no origin (curl, Postman, server-to-server)
       if (!origin) return callback(null, true);
       if (ALLOWED_ORIGINS.includes(origin)) return callback(null, true);
+      // Allow any Vercel preview URL for this project
+      if (VERCEL_PREVIEW_RE.test(origin)) return callback(null, true);
       callback(new Error(`CORS: origin ${origin} not allowed`));
     },
     credentials: true,
