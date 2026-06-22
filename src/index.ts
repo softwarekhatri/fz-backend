@@ -97,7 +97,7 @@ app.use("/api/auth/resend-otp", authLimiter);
 app.get("/health", (_req, res) => {
   res.status(200).json({
     success: true,
-    message: "FashionZone API is running",
+    message: "Poshak Kart API is running",
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV || "development",
   });
@@ -106,7 +106,7 @@ app.get("/health", (_req, res) => {
 app.get("/", (_req, res) => {
   res.status(200).json({
     success: true,
-    message: "Welcome to FashionZone API",
+    message: "Welcome to Poshak Kart API",
     version: "1.0.0",
     docs: "/health",
   });
@@ -132,7 +132,7 @@ connectDB().catch((err) => console.error('DB connection error:', err));
 // ─── Start HTTP Server (local / non-Vercel only) ──────────────────────────────
 if (!process.env.VERCEL) {
   app.listen(PORT, () => {
-    console.log(`\n🚀 FashionZone server is running`);
+    console.log(`\n🚀 Poshak Kart server is running`);
     console.log(`   Environment: ${process.env.NODE_ENV || "development"}`);
     console.log(`   Port:        ${PORT}`);
     console.log(`   URL:         http://localhost:${PORT}`);

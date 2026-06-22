@@ -124,7 +124,7 @@ export const verifyEmail = async (req: Request, res: Response, next: NextFunctio
 
     res.status(200).json({
       success: true,
-      message: 'Email verified successfully! Welcome to FashionZone.',
+      message: 'Email verified successfully! Welcome to Poshak Kart.',
       token,
       user: {
         id: user._id,
