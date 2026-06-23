@@ -28,6 +28,8 @@ const ALLOWED_ORIGINS = [
   process.env.CLIENT_URL,
   ...extraOrigins,
   // Production deployments
+  "https://www.poshakkart.in",
+  "https://poshakkart.in",
   "https://fz-khatri.vercel.app",
   "https://fz-frontend.vercel.app",
   // Local development
