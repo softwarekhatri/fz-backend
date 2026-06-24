@@ -41,7 +41,8 @@ const ALLOWED_ORIGINS = [
 ].filter(Boolean) as string[];
 
 // Pattern for Vercel preview deployment URLs (fz-frontend-git-*.vercel.app)
-const VERCEL_PREVIEW_RE = /^https:\/\/fz-(?:frontend|khatri)[a-z0-9-]*\.vercel\.app$/;
+const VERCEL_PREVIEW_RE =
+  /^https:\/\/fz-(?:frontend|khatri)[a-z0-9-]*\.vercel\.app$/;
 
 app.use(
   cors({
@@ -129,7 +130,7 @@ app.use(errorHandler);
 // ─── Database ─────────────────────────────────────────────────────────────────
 // Connect at module load time — works for both long-running servers and
 // serverless functions (Vercel reuses the cached promise on warm invocations).
-connectDB().catch((err) => console.error('DB connection error:', err));
+connectDB().catch((err) => console.error("DB connection error:", err));
 
 // ─── Start HTTP Server (local / non-Vercel only) ──────────────────────────────
 if (!process.env.VERCEL) {
